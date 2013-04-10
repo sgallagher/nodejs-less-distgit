@@ -1,0 +1,43 @@
+From 0f4272fd6082ce4a5d55894a09334cd9bcf68a8c Mon Sep 17 00:00:00 2001
+From: Stephen Gallagher <sgallagh@redhat.com>
+Date: Wed, 19 Dec 2012 09:06:24 -0500
+Subject: [PATCH] Require include files from the default location :
+
+---
+ bin/lessc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bin/lessc b/bin/lessc
+index 31a6700b73d81190202dfc9566c00a56ee60cb02..24d526121adc0fd29487747774e4e5a56662b9e6 100755
+--- a/bin/lessc
++++ b/bin/lessc
+@@ -5,7 +5,7 @@ var path = require('path'),
+     sys = require('util'),
+     os = require('os');
+ 
+-var less = require('../lib/less');
++var less = require('less');
+ var args = process.argv.slice(1);
+ var options = {
+     compress: false,
+@@ -53,7 +53,7 @@ args = args.filter(function (arg) {
+             break;
+         case 'h':
+         case 'help':
+-            require('../lib/less/lessc_helper').printUsage();
++            require('less/lessc_helper').printUsage();
+             continueProcessing = false;
+         case 'x':
+         case 'compress':
+@@ -116,7 +116,7 @@ if (output) {
+ if (! input) {
+     sys.puts("lessc: no input files");
+     sys.puts("");
+-    require('../lib/less/lessc_helper').printUsage();
++    require('less/lessc_helper').printUsage();
+     currentErrorcode = 1;
+     return;
+ }
+-- 
+1.8.1.4
+
