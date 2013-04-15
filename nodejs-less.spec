@@ -1,3 +1,5 @@
+%{?nodejs_find_provides_and_requires}
+
 Name:           nodejs-less
 Version:        1.3.3
 Release:        3%{?dist}
