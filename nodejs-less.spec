@@ -2,7 +2,7 @@
 
 Name:           nodejs-less
 Version:        1.3.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -36,6 +36,9 @@ and server-side, with Node.js and Rhino.
 # Remove pre-built files from the dist/ directory
 rm -f dist/*.js
 
+# enable compression using ycssmin
+%nodejs_fixdep ycssmin '~1.0.1'
+
 %build
 # Nothing to be built, we're just carrying around flat files
 
@@ -62,6 +65,9 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Mon May 06 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1.3.3-4
+- enable compression using ycssmin
+
 * Wed Apr 10 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.3.3-3
 - Fix BuildRequires to include nodejs-devel
 
