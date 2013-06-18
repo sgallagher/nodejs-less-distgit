@@ -2,7 +2,7 @@
 
 Name:           nodejs-less
 Version:        1.3.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -19,6 +19,7 @@ Patch0001: 0001-Require-include-files-from-the-default-location.patch
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
 Requires:       nodejs
+ExclusiveArch: %{nodejs_arches} noarch
 
 Provides:  lessjs = %{version}-%{release}
 Obsoletes: lessjs < 1.3.3-2
@@ -65,6 +66,9 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Tue Jun 18 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.3.3-5
+- Use correct build architectures
+
 * Mon May 06 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1.3.3-4
 - enable compression using ycssmin
 
