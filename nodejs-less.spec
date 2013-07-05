@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -66,6 +66,13 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Fri Jul 05 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.4.1-1
+- New upstream release 1.4.1
+- https://github.com/less/less.js/blob/v1.4.1/CHANGELOG.md
+- Fix syncImports and yui-compress option, as they were being ignored
+- Fixed several global variable leaks
+- Handle getting null or undefined passed as the options object
+
 * Tue Jun 18 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.4.0-1
 - New upstream release 1.4.0
 - https://github.com/cloudhead/less.js/blob/master/CHANGELOG.md
