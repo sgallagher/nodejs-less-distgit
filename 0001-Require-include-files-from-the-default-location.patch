@@ -1,14 +1,14 @@
-From 19a1dcbd5cd38c2493c949b2e2e212fb54aff855 Mon Sep 17 00:00:00 2001
+From 825a86355ce00702e7ca2705f8db09bca55bcb1f Mon Sep 17 00:00:00 2001
 From: Stephen Gallagher <sgallagh@redhat.com>
 Date: Wed, 19 Dec 2012 09:06:24 -0500
-Subject: [PATCH] Require include files from the default location :
+Subject: [PATCH] Require include files from the default location
 
 ---
  bin/lessc | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/bin/lessc b/bin/lessc
-index ec058215d12936b813b93e87323fe11f9dd72ed8..3552e706e60a9f6ed7f30b9620d76ed064fed796 100755
+index 9ee3609a3acf940d6c3ae8045087d2178cfeaebe..c0381694a0f581c6ccf4d260ff3fa4d5f8702ffb 100755
 --- a/bin/lessc
 +++ b/bin/lessc
 @@ -6,7 +6,7 @@ var path = require('path'),
@@ -20,7 +20,7 @@ index ec058215d12936b813b93e87323fe11f9dd72ed8..3552e706e60a9f6ed7f30b9620d76ed0
  var args = process.argv.slice(1);
  var options = {
      depends: false,
-@@ -84,7 +84,7 @@ args = args.filter(function (arg) {
+@@ -88,7 +88,7 @@ args = args.filter(function (arg) {
              break;
          case 'h':
          case 'help':
@@ -29,15 +29,15 @@ index ec058215d12936b813b93e87323fe11f9dd72ed8..3552e706e60a9f6ed7f30b9620d76ed0
              continueProcessing = false;
          case 'x':
          case 'compress':
-@@ -172,7 +172,7 @@ if (output) {
+@@ -225,7 +225,7 @@ if (options.sourceMap === true) {
  if (! input) {
-     sys.puts("lessc: no input files");
-     sys.puts("");
+     console.log("lessc: no input files");
+     console.log("");
 -    require('../lib/less/lessc_helper').printUsage();
 +    require('less/lessc_helper').printUsage();
      currentErrorcode = 1;
      return;
  }
 -- 
-1.8.2.1
+1.8.3.1
 

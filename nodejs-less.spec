@@ -1,8 +1,8 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.4.1
-Release:        2%{?dist}
+Version:        1.5.0
+Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -66,6 +66,48 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Tue Oct 22 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.5.0-1
+- New upstream release 1.5.0
+- https://github.com/less/less.js/blob/v1.5.0/CHANGELOG.md
+- sourcemap support
+- support for import inline option to include css that you do NOT want less to
+  parse e.g. `@import (inline) "file.css";`
+- better support for modifyVars (refresh styles with new variables, using a
+  file cache), is now more resiliant
+- support for import reference option to reference external css, but not output
+  it. Any mixin calls or extend's will be output.
+- support for guards on selectors (currently only if you have a single
+  selector)
+- allow property merging through the +: syntax
+- Added min/max functions
+- Added length function and improved extract to work with comma seperated
+  values
+- when using import multiple, sub imports are imported multiple times into
+  final output
+- fix bad spaces between namespace operators
+- do not compress comment if it begins with an exclamation mark
+- Fix the saturate function to pass through when using the CSS syntax
+- Added svg-gradient function
+- Added no-js option to lessc (in browser, use javascriptEnabled: false) which
+  disallows JavaScript in less files
+- switched from the little supported and buggy cssmin (previously ycssmin) to
+  clean-css
+- support transparent as a color, but not convert between rgba(0, 0, 0, 0) and
+  transparent
+- remove sys.puts calls to stop deprecation warnings in future node.js releases
+- Browser: added logLevel option to control logging (2 = everything, 1 = errors
+  only, 0 = no logging)
+- Browser: added errorReporting option which can be "html" (default) or
+  "console" or a function
+- Now uses grunt for building and testing
+- A few bug fixes for media queries, extends, scoping, compression and import
+  once.
+- if you don't pass a strict maths option, font size/line height options are
+  output correctly again
+- npmignore now include .gitattributes
+- property names may include capital letters
+- various windows path fixes (capital letters, multiple // in a path)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
