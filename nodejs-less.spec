@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.5.0
+Version:        1.5.1
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -66,6 +66,19 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Tue Nov 26 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.5.1-1
+- New upstream release 1.5.1
+- https://github.com/less/less.js/blob/v1.5.1/CHANGELOG.md
+- Added source-map-URL option
+- Fixed a bug which meant the minimised 1.5.0 browser version was not wrapped,
+  meaning it interfered with require js
+- Fixed a bug where the browser version assume port was specified
+- Added the ability to specify variables on the command line
+- Upgraded clean-css and fixed it from trying to import
+- correct a bug meaning imports weren't synchronous (syncImport option
+  available for full synchronous behaviour)
+- better mixin matching behaviour with calling multiple classes e.g. .a.b.c;
+
 * Tue Oct 22 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.5.0-1
 - New upstream release 1.5.0
 - https://github.com/less/less.js/blob/v1.5.0/CHANGELOG.md
