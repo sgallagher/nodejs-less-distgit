@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.5.1
+Version:        1.6.0
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -66,6 +66,34 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Thu Jan 02 2014 Stephen Gallagher <sgallagh@redhat.com> - 1.6.0-1
+- New upstream release 1.6.0
+- https://github.com/less/less.js/blob/v1.6.0/CHANGELOG.md
+- Properties can be interpolated, e.g. @{prefix}-property: value;
+- a default function has been added only valid in mixin definitions to
+  determine if no other mixins have been matched
+- Added a plugins option that allows specifying an array of visitors run on the
+  less AST
+- Performance improvements that may result in approx 20-40% speed up
+- Javascript evaluations returning numbers can now be used in
+  calculations/functions
+- fixed issue when adding colours, taking the alpha over 1 and breaking when
+  used in colour functions
+- when adding together 2 colours with non zero alpha, the alpha will now be
+  combined rather than added
+- the advanced colour functions no longer ignore transparency, they blend that
+  too
+- Added --clean-option and cleancssOptions to allow passing in clean css
+  options
+- rgba declarations are now always clamped e.g. rgba(-1,258,258, -1) becomes
+  rgba(0, 255, 255, 0)
+- Fix possible issue with import reference not bringing in styles (may not be a
+  bugfix, just a code tidy)
+- Fix some issues with urls() being prefixed twice and unquoted urls in mixins
+  being processed each time they are called
+- Fixed error messages for undefined variables in javascript evaluation
+- Fixed line/column numbers from math errors
+
 * Tue Nov 26 2013 Stephen Gallagher <sgallagh@redhat.com> - 1.5.1-1
 - New upstream release 1.5.1
 - https://github.com/less/less.js/blob/v1.5.1/CHANGELOG.md
