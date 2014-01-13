@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.6.0
+Version:        1.6.1
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -18,6 +18,7 @@ Patch0001: 0001-Require-include-files-from-the-default-location.patch
 
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
+BuildRequires:  nodejs-packaging
 Requires:       nodejs
 ExclusiveArch: %{nodejs_arches} noarch
 
@@ -66,6 +67,19 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Mon Jan 13 2014 Stephen Gallagher <sgallagh@redhat.com> - 1.6.1-1
+- New upstream release 1.6.1
+- https://github.com/less/less.js/blob/v1.6.1/CHANGELOG.md
+- support ^ and ^^ shadow dom selectors
+- fix sourcemap selector (used to report end of the element or selector) and
+  directive position (previously not supported)
+- fix parsing empty less files
+- error on (currently) ambiguous guards on multiple css selectors
+- older environments - protect against typeof regex returning function
+- Do not use default keyword
+- use innerHTML in tests, not innerText
+- protect for-in in case Array and Object prototypes have custom fields
+
 * Thu Jan 02 2014 Stephen Gallagher <sgallagh@redhat.com> - 1.6.0-1
 - New upstream release 1.6.0
 - https://github.com/less/less.js/blob/v1.6.0/CHANGELOG.md
