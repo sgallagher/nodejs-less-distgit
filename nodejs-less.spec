@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.6.3
+Version:        1.7.0
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -19,6 +19,7 @@ Patch0001: 0001-Require-include-files-from-the-default-location.patch
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
 BuildRequires:  nodejs-packaging
+BuildRequires:  nodejs-grunt-cli
 Requires:       nodejs
 ExclusiveArch: %{nodejs_arches} noarch
 
@@ -67,6 +68,41 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Wed Mar 05 2014 Stephen Gallagher <sgallagh@redhat.com> 1.7.0-1
+- New upstream release 1.7.0
+- https://github.com/less/less.js/blob/v1.7.0/CHANGELOG.md
+- Add support for rulesets in variables and passed to mixins to allow wrapping
+- Change luma to follow the w3c spec, luma is available as luminance. Contrast
+  still uses luma so you may see differences if your threshold % is close to
+  the existing calculated luma.
+- Upgraded clean css which means the --selectors-merge-mode is now renamed
+  --compatibility
+- Add support for using variables with @keyframes, @namespace, @charset
+- Support property merging with +_ when spaces are needed and keep + for comma
+  separated
+- Imports now always import once consistently- a race condition meant
+  previously certain configurations would lead to a different ordering of
+  files
+- Fix support for `.mixin(@args...)` when called with no args (e.g.
+  `.mixin();`)
+- Do unit conversions with min and max functions. Don't pass through if not
+  understood, throw an error
+- Allow % to be passed on its own to the unit function e.g. `unit(10, %)`
+- Fix a bug when comparing a unit value to a non-unit value if the unit-value
+  was the multiple of another unit (e.g. cm, mm, deg etc.)
+- Fix mixins with media queries in import reference files not being put into
+  the output (they now output, they used to incorrectly not)
+- Fix lint mode- now reports all errors
+- Fixed a small scope issue with & {} selector rulesets incorrectly making
+  mixins visible- regression from 1.6.2
+- Browser- added log level "debug" at 3 to get less logging, The default has
+  changed so unless you set the value to the default you won't see a
+  difference
+- Browser- logLevel takes effect regardless of the environment (production/dev)
+- Browser- added postProcessor option, a function called to post-process the
+  css before adding to the page
+- Browser- use the right request for file access in IE
+
 * Tue Feb 25 2014 Stephen Gallagher <sgallagh@redhat.com> 1.6.3-1
 - New upstream release 1.6.3
 - https://github.com/less/less.js/blob/v1.6.3/CHANGELOG.md
