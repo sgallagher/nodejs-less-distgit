@@ -2,7 +2,7 @@
 
 Name:           nodejs-less
 Version:        1.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -68,6 +68,9 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.7.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed Mar 05 2014 Stephen Gallagher <sgallagh@redhat.com> 1.7.0-1
 - New upstream release 1.7.0
 - https://github.com/less/less.js/blob/v1.7.0/CHANGELOG.md
