@@ -1,7 +1,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.7.3
+Version:        1.7.5
 Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
@@ -15,6 +15,12 @@ Source0: http://registry.npmjs.org/less/-/less-%{version}.tgz
 # Since we're installing this in a global location, fix the require()
 # calls to point there.
 Patch0001: 0001-Require-include-files-from-the-default-location.patch
+
+# The sourcemap tests are quite broken. They rely on matching a pre-
+# calculated result, but the ordering of the resulting dictionary is
+# not necessarily deterministic. We'll disable this test until
+# upstream fixes the test.
+Patch0002: 0002-Fedora-disable-sourcemap-tests.patch
 
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
@@ -35,6 +41,7 @@ and server-side, with Node.js and Rhino.
 %setup -q -n package
 
 %patch0001 -p1
+%patch0002 -p1
 
 # Remove pre-built files from the dist/ directory
 rm -f dist/*.js
@@ -46,9 +53,10 @@ rm -f dist/*.js
 # Nothing to be built, we're just carrying around flat files
 
 %check
+%nodejs_symlink_deps --check
 # Tests have a bug in them and will fail to find source-map,
 # even if it is installed.
-# node test
+node test
 
 
 %install
@@ -70,9 +78,15 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Thu Sep 04 2014 Stephen Gallagher <sgallagh@redhat.com> 1.7.5-1
+- New upstream release 1.7.5
+- https://github.com/less/less.js/blob/v1.7.5/CHANGELOG.md
+- Enable tests in RPM build
+- Disable broken source-map test
+
 * Mon Jun 23 2014 Stephen Gallagher <sgallagh@redhat.com> 1.7.3-1
 - New upstream release 1.7.3
-- https://github.com/less/less.js/blob/v1.7.1/CHANGELOG.md
+- https://github.com/less/less.js/blob/v1.7.3/CHANGELOG.md
 - Fix detection of recursive mixins
 - Fix the paths option for later versions of node (0.10+)
 - Fix paths joining bug
