@@ -1,8 +1,8 @@
 %{?nodejs_find_provides_and_requires}
 
 Name:           nodejs-less
-Version:        1.7.5
-Release:        3%{?dist}
+Version:        2.6.1
+Release:        1%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -16,16 +16,12 @@ Source0: http://registry.npmjs.org/less/-/less-%{version}.tgz
 # calls to point there.
 Patch0001: 0001-Require-include-files-from-the-default-location.patch
 
-# The sourcemap tests are quite broken. They rely on matching a pre-
-# calculated result, but the ordering of the resulting dictionary is
-# not necessarily deterministic. We'll disable this test until
-# upstream fixes the test.
-Patch0002: 0002-Fedora-disable-sourcemap-tests.patch
-
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
 BuildRequires:  nodejs-packaging
-BuildRequires:  nodejs-grunt-cli
+BuildRequires:  npm(grunt-cli)
+BuildRequires:  npm(source-map)
+BuildRequires:  npm(mime)
 Requires:       nodejs
 ExclusiveArch: %{nodejs_arches} noarch
 
@@ -41,22 +37,21 @@ and server-side, with Node.js and Rhino.
 %setup -q -n package
 
 %patch0001 -p1
-%patch0002 -p1
 
 # Remove pre-built files from the dist/ directory
 rm -f dist/*.js
-
-# enable compression using ycssmin
-%nodejs_fixdep ycssmin '~1.0.1'
 
 %build
 # Nothing to be built, we're just carrying around flat files
 
 %check
-%nodejs_symlink_deps --check
-# Tests have a bug in them and will fail to find source-map,
-# even if it is installed.
-node test
+%nodejs_symlink_deps --check --optional
+
+%{__nodejs} -e 'require("./")'
+
+# Some tests are known to fail because we don't have npm(image-size)
+# packaged, so make this just informative.
+node test ||:
 
 
 %install
@@ -78,6 +73,10 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Tue Mar 29 2016 Stephen Gallagher <sgallagh@redhat.com> - 2.6.1-1
+- Upgrade to latest upstream stable release 2.6.1
+- https://github.com/less/less.js/blob/v2.6.1/CHANGELOG.md
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
