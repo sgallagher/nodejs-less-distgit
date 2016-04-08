@@ -2,7 +2,7 @@
 
 Name:           nodejs-less
 Version:        2.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Less.js The dynamic stylesheet language
 
 # cssmin.js is licensed under BSD license
@@ -11,10 +11,6 @@ License:        ASL 2.0 and BSD
 
 URL:            http://lesscss.org
 Source0: http://registry.npmjs.org/less/-/less-%{version}.tgz
-
-# Since we're installing this in a global location, fix the require()
-# calls to point there.
-Patch0001: 0001-Require-include-files-from-the-default-location.patch
 
 BuildArch:      noarch
 BuildRequires:  nodejs-devel
@@ -36,8 +32,6 @@ and server-side, with Node.js and Rhino.
 %prep
 %setup -q -n package
 
-%patch0001 -p1
-
 # Remove pre-built files from the dist/ directory
 rm -f dist/*.js
 
@@ -49,16 +43,41 @@ rm -f dist/*.js
 
 %{__nodejs} -e 'require("./")'
 
+# Simple test
+cat > testing.less << EOF
+@bg: #a1a1a1;
+
+body {
+  background: @bg;
+}
+EOF
+
+workingdir=`pwd`
+pushd /
+%{buildroot}%{nodejs_sitelib}/less/bin/lessc - < $workingdir/testing.less
+popd
+
 # Some tests are known to fail because we don't have npm(image-size)
 # packaged, so make this just informative.
-node test ||:
+%{__nodejs} test ||:
 
 
 %install
 mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{nodejs_sitelib}/less
+mkdir -p %{buildroot}%{nodejs_sitelib}/less/lib
 chmod a+x bin/lessc
-cp -rp bin package.json lib/less/* %{buildroot}/%{nodejs_sitelib}/less
+
+cp -rp bin \
+       browser.js \
+       index.js \
+       package.json \
+       %{buildroot}/%{nodejs_sitelib}/less
+
+cp -rp lib/less \
+       lib/less-browser \
+       lib/less-node \
+       lib/less-rhino \
+       %{buildroot}/%{nodejs_sitelib}/less/lib
 
 # Install /usr/bin/lessc
 ln -s %{nodejs_sitelib}/less/bin/lessc \
@@ -73,6 +92,12 @@ ln -s %{nodejs_sitelib}/less/bin/lessc \
 
 
 %changelog
+* Fri Apr 08 2016 Stephen Gallagher <sgallagh@redhat.com> - 2.6.1-2
+- Fix missing lib components
+- Add basic test for lessc
+- Drop unused patches
+- Resolves# RHBZ#1324883
+
 * Tue Mar 29 2016 Stephen Gallagher <sgallagh@redhat.com> - 2.6.1-1
 - Upgrade to latest upstream stable release 2.6.1
 - https://github.com/less/less.js/blob/v2.6.1/CHANGELOG.md
